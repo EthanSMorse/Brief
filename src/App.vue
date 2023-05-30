@@ -1,31 +1,14 @@
-<script setup>
+<script >
 </script>
 
 <template>
-  <v-container>
-    <v-row align="center" justify="center">
-      <v-col cols="auto">
-        <v-btn size="x-small">Extra small Button</v-btn>
-      </v-col>
-
-      <v-col cols="auto">
-        <v-btn size="small">Small Button</v-btn>
-      </v-col>
-
-      <v-col cols="auto">
-        <v-btn>Regular Button</v-btn>
-      </v-col>
-
-      <v-col cols="auto">
-        <v-btn size="large">Large Button</v-btn>
-      </v-col>
-
-      <v-col cols="auto">
-        <v-btn size="x-large">X-Large Button</v-btn>
-      </v-col>
-    </v-row>
-  </v-container>
+ <nav>
+  <router-link to="/">Home</router-link>
+  <router-link to="/search">Search</router-link>
+  <router-link to="/contact">Contact Us</router-link>
+ </nav>
+ <router-view/>
 </template>
 
-<style scoped>
+<style >
 </style>
