@@ -6,7 +6,7 @@ let output = ref ("")
 
 async function search () {
     const response = await fetch ('https://api.dictionaryapi.dev/api/v2/entries/en/' + input.value);
-    output.value = response.formData()
+    output.value = await response.json()
     console.log (response)
 }
 </script>
@@ -78,10 +78,20 @@ async function search () {
             >
                 <v-text-field label="Search" @keydown.enter="search" v-model="input"></v-text-field>
                 <div id="main-text">
-                    <button @click="search">FETCH</button>
+                    <h1>Definitions:</h1>
                     <br>
+                    <div>
+                        
+                    </div>
+                    <div v-for="definition in output?.[0]?.meanings?.[0]?.definitions">
+                        {{ definition.definition }}
+                    </div>
                     <br>
-                    {{ output }}
+                    <h1>Other Info:</h1>
+                    <div v-for="meaning in output?.[0]?.meanings">
+                        {{ meaning }}
+                    </div>
+                    <br>
                 </div>
             </v-sheet>
           </v-col>
