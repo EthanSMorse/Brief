@@ -5,14 +5,6 @@ import ContactPage from './views/ContactPage.vue'
 
 const routes = [
     {
-        path: '/',
-        component: HomePage
-    },
-    {
-        path: '/search',
-        component: SearchPage
-    },
-    {
         path: '/contact',
         component: ContactPage
     },

@@ -3,95 +3,63 @@ import {ref} from 'vue'
 
 let input = ref ("")
 let output = ref ("")
+let blank = ref (false)
 
 async function search () {
     const response = await fetch ('https://api.dictionaryapi.dev/api/v2/entries/en/' + input.value);
     output.value = await response.json()
     console.log (response)
+    blank.value = true
 }
 </script>
 
 <template>
   <v-app id="inspire">
-    <v-app-bar flat>
+    <v-app-bar flat id="header">
       <v-container class="fill-height d-flex align-center">
-        <v-avatar
-          class="me-10 ms-4"
-          color="grey-darken-1"
-          size="32"
-        ></v-avatar>
-
-        <v-btn
-          v-for="link in links"
-          :key="link"
-          variant="text"
-        >
-          {{ link }}
-        </v-btn>
-
-        <v-spacer></v-spacer>
-
-        <v-responsive max-width="260">
-          <v-text-field
-            density="compact"
-            hide-details
-            variant="solo"
-          ></v-text-field>
-        </v-responsive>
+        <img id="profile" src="ScreenShot2023-06-05at2.11.44PM.png">
+        <h1 id="header-h1">Words 4 Idiots</h1>
       </v-container>
     </v-app-bar>
 
-    <v-main class="bg-grey-lighten-3">
+    <v-main id="main">
       <v-container>
         <v-row>
-          <v-col cols="2">
-            <v-sheet rounded="lg">
-              <v-list rounded="lg">
-                <v-list-item
-                  v-for="n in 5"
-                  :key="n"
-                  link
-                >
-                  <v-list-item-title>
-                    List Item {{ n }}
-                  </v-list-item-title>
-                </v-list-item>
-
-                <v-divider class="my-2"></v-divider>
-
-                <v-list-item
-                  link
-                  color="grey-lighten-4"
-                >
-                  <v-list-item-title>
-                    Refresh
-                  </v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-sheet>
-          </v-col>
 
           <v-col>
             <v-sheet
               min-height="70vh"
               rounded="lg"
+              id="search"
             >
                 <v-text-field label="Search" @keydown.enter="search" v-model="input"></v-text-field>
-                <div id="main-text">
+                <div id="main-text" v-if="blank == true">
                     <h1>Definitions:</h1>
                     <br>
-                    <div>
-                        
-                    </div>
                     <div v-for="definition in output?.[0]?.meanings?.[0]?.definitions">
                         {{ definition.definition }}
                     </div>
                     <br>
-                    <h1>Other Info:</h1>
-                    <div v-for="meaning in output?.[0]?.meanings">
-                        {{ meaning }}
-                    </div>
+                    <h1>Synonyms:</h1>
                     <br>
+                      <div v-for="synonym in output?.[0]?.meanings?.[0]?.definitions">
+                        <div v-for="value in synonym.synonyms">>
+                          {{ value }}
+                          <br>
+                        </div>
+                      </div>
+                      <br>
+                      <h1>Antonyms:</h1>
+                      <br>
+                      <div v-for="antonym in output?.[0]?.meanings?.[0]?.definitions">
+                        <div v-for="value in antonym.antonyms">
+                          {{ value }}
+                        </div>
+                      </div>
+                    <br>
+                </div>
+                <div v-else>
+                  <h1 id="init-text">Type a word into the search bar, press enter, and you'll have all the information you need!</h1>
                 </div>
             </v-sheet>
           </v-col>
@@ -105,5 +73,41 @@ async function search () {
 <style>
 #main-text {
     margin-left: 30px;
+}
+
+#init-text {
+  text-align: center;
+  margin: 30px;
+  margin-top: 130px;
+}
+
+#header {
+  background-color:maroon;
+  color: goldenrod;
+}
+
+#header-h1 {
+  margin-left: 20px;
+}
+
+#main {
+   background-color: rgb(168, 0, 34);
+}
+
+#search {
+  background-color: maroon;
+  color: goldenrod;
+}
+
+#button {
+  background-color: maroon;
+  color:goldenrod;
+}
+
+#profile {
+  width: 40px;
+  height: 40px;
+  border: 1px;
+  border-radius: 100%;
 }
 </style>
